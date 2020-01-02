@@ -7,14 +7,14 @@ const ExifImage = require('exif').ExifImage;
 app.set('view engine','ejs');
 
 app.get('/', (req,res) => {
-	res.redirect('/filetoupload');
+	res.redirect('/fileupload');
 });
 
-app.get('/filetoupload', (req,res) => {
+app.get('/fileupload', (req,res) => {
 	res.status(200).render('filetoupload');
 });
 
-app.post('/filetoupload' , (req,res) => {
+app.post('/fileupload' , (req,res) => {
 	const form = new formidable.IncomingForm();
 	form.parse(req, (err, fields, files) => {
 		let title = null;
@@ -36,11 +36,10 @@ app.post('/filetoupload' , (req,res) => {
 		let longitudeRef = null;
 		title = fields.title;
         	description = fields.description;
-		console.log("1");
-		fs.readFile(files.filetoupload.path, (err,data) => {
+		fs.readFile(files.fileupload.path, (err,data) => {
 			image = new Buffer.from(data).toString('base64');
 			try {
-    				new ExifImage({ image : files.filetoupload.path }, function (error, exifData) {
+    				new ExifImage({ image : files.fileupload.path }, function (error, exifData) {
         				if (error){
             					console.log('Error: '+error.message);
 						res.redirect('/error');
