@@ -31,7 +31,9 @@ app.post('/filetoupload' , (req,res) => {
 		let mlo = null;
 		let slo = null;
 		let lat = null;
-		let lon = null;;
+		let lon = null;
+		let latitudeRef = null;
+		let longitudeRef = null;
 		title = fields.title;
         	description = fields.description;
 		console.log("1");
@@ -49,11 +51,12 @@ app.post('/filetoupload' , (req,res) => {
 						dla = exifData.gps.GPSLatitude[0];
 						mla = exifData.gps.GPSLatitude[1];
 						sla = exifData.gps.GPSLatitude[2];
-						lat = dla + mla/60 + sla/3600;
+						latitudeRef = exifData.gps.GPSLatitudeRef;
+						lat = (dla + mla/60 + sla/3600) * (latitudeRef == "N" ? 1 : -1);
 						dlo = exifData.gps.GPSLongitude[0];
 						mlo = exifData.gps.GPSLongitude[1];
 						slo = exifData.gps.GPSLongitude[2];
-						lon = dlo + mlo/60 + slo/3600;
+						lon = dlo + mlo/60 + slo/3600 * (longitudeRef == "W" ? -1 : 1);
 						res.status(200).render('display', {t :title, d :description, i: image, ma: make, mo: model, c: createTime});
 						app.get('/map', (req,res) => {
 							res.status(200).render('map' ,{la: lat, lo: lon});
