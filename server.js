@@ -11,7 +11,7 @@ app.get('/', (req,res) => {
 });
 
 app.get('/fileupload', (req,res) => {
-	res.status(200).render('filetoupload');
+	res.status(200).render('fileupload');
 });
 
 app.post('/fileupload' , (req,res) => {
