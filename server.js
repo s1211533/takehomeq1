@@ -1,3 +1,4 @@
+  
 const fs = require('fs');
 const formidable = require('formidable');
 const express = require('express');
@@ -35,18 +36,17 @@ app.post('/filetoupload' , (req,res) => {
         				if (error)
             					console.log('Error: '+error.message);
         				else
-            					console.log(exifData);
+						console.log(exifData);
 						make = exifData.image.Make; 
 						console.log(exifData.image.Make);
 						model = exifData.image.Model;
 						createTime = exifData.exif.CreateDate;
-						
+						res.status(200).render('display', {t :title, d :description, i: image, ma: make, mo: model, c: createTime});	
     				});
 			} catch (error) {
    				 console.log('Error: ' + error.message);
 			}
-			console.log(exifData.image.Make);
-			res.status(200).render('display', {t :title, d :description, i: image, ma: make, mo: model, c: createTime});
+			
 		});
 	});
 });
