@@ -41,7 +41,7 @@ app.post('/filetoupload' , (req,res) => {
     				new ExifImage({ image : files.filetoupload.path }, function (error, exifData) {
         				if (error){
             					console.log('Error: '+error.message);
-						res.redirect('/filetoupload');
+						res.redirect('/error');
 					}else{
 						make = exifData.image.Make; 
 						model = exifData.image.Model;
@@ -62,10 +62,14 @@ app.post('/filetoupload' , (req,res) => {
     				});
 			} catch (error) {
    				console.log('Error: ' + error.message);
-				res.redirect('/filetoupload')
+				res.redirect('/error');
 			}
 		});
 	});
+});
+
+app.get('/error', (req,res) => {
+	res.status(200).render('error');
 });
 
 app.listen(process.env.PORT || 8099);
