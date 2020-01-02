@@ -1,4 +1,3 @@
-  
 const fs = require('fs');
 const formidable = require('formidable');
 const express = require('express');
@@ -28,7 +27,6 @@ app.post('/filetoupload' , (req,res) => {
 		let location = null;
 		title = fields.title;
         	description = fields.description;
-		console.log("1");
 		fs.readFile(files.filetoupload.path, (err,data) => {
 			image = new Buffer.from(data).toString('base64');
 			try {
