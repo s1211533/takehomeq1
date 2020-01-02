@@ -37,6 +37,7 @@ app.post('/filetoupload' , (req,res) => {
         				else
             					console.log(exifData);
 						make = exifData.image.Make; 
+						console.log(exifData.image.Make);
 						model = exifData.image.Model;
 						createTime = exifData.exif.CreateDate;
 						
@@ -44,6 +45,7 @@ app.post('/filetoupload' , (req,res) => {
 			} catch (error) {
    				 console.log('Error: ' + error.message);
 			}
+			console.log(exifData.image.Make);
 			res.status(200).render('display', {t :title, d :description, i: image, ma: make, mo: model, c: createTime});
 		});
 	});
