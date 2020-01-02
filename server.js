@@ -21,6 +21,10 @@ app.post('/filetoupload' , (req,res) => {
 		let title = null;
 		let description = null;
 		let image = null;
+		let make = null;
+		let model = null;
+		let createTime = null;
+		let location = null;
 		title = fields.title;
         	description = fields.description;
 		console.log("1");
@@ -31,13 +35,16 @@ app.post('/filetoupload' , (req,res) => {
         				if (error)
             					console.log('Error: '+error.message);
         				else
-            					console.log(exifData.image.GPSInfo); 
+            					console.log(exifData);
+						make = exifData.image.Make; 
+						model = exifData.image.Model;
+						createTime = exifData.exif.CreateDate;
 						
     				});
 			} catch (error) {
    				 console.log('Error: ' + error.message);
 			}
-			res.status(200).render('display', {t :title, d :description, i: image});
+			res.status(200).render('display', {t :title, d :description, i: image, ma: make, mo: model, c: createTime});
 		});
 	});
 });
