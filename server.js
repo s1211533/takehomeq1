@@ -1,59 +1,37 @@
-const http = require("http");
-const bodyParser = require('body-parser');
 const fs = require('fs');
-const path = require('path');
-const multer = require("multer");
-
+const formidable = require('formidable');
 const express = require('express');
 const app = express();
-const httpServer = http.createServer(app);
-const PORT = process.env.PORT || 3000;
 
-httpServer.listen(3000, () => {
-  console.log(`Server is listening on port ${PORT}`);
+app.set('view engine','ejs');
+
+var title = null;
+var description = null;
+
+app.get('/', (req,res) => {
+	res.redirect('/filetoupload');
 });
 
-const handleError = (err, res) => {
-  res
-    .status(500)
-    .contentType("text/plain")
-    .end("Oops! Something went wrong!");
-};
-
-const upload = multer({
-  location: "/pic/"
+app.get('/filetoupload', (req,res) => {
+	res.status(200).render('filetoupload');
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get("/", express.static(path.join(__dirname, "./views")));
-
-app.post('/upload', upload.single("image"), (req,res) => {
-    const tempPath = req.file.path;
-    const targetPath = path.join(__dirname, "./pic/image.png");
-
-    if (path.extname(req.file.originalname).toLowerCase() === ".png") {
-      fs.rename(tempPath, targetPath, err => {
-        if (err) return handleError(err, res);
-
-        res
-          .status(200)
-          .contentType("text/plain")
-          .end("File uploaded!");
-      });
-    } else {
-      fs.unlink(tempPath, err => {
-        if (err) return handleError(err, res);
-
-        res
-          .status(403)
-          .contentType("text/plain")
-          .end("Only .png files are allowed!");
-      });
-    }
+app.post('/filetoupload' , (req,res) => {
+	const form = new formidable.IncomingForm();
+	form.parse(req, (err, fields, files) => {
+		console.log(filename);
+      		if (fields.title && fields.title.length > 0) {
+        		title = fields.title;
+      		}
+		if (fields.description && fields.description.length > 0) {
+        		description = fields.description;
+      		}
+		console.log("1");
+		fs.readFile(files.filetoupload.path, (err,data) => {
+			image = new Buffer.from(data).toString('base64');
+			res.status(200).render('filetoupload', {t :title, d :description});
+		});
+	});
 });
 
-app.get('/image.png', (req,res) => {
-	res.sendFile(path.join(__dirname, "./uploads/image.png"));
-});
+app.listen(process.env.PORT || 8099);
