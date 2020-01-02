@@ -52,8 +52,12 @@ app.post('/filetoupload' , (req,res) => {
 						longitude1 = exifData.gps.GPSLongitude[1];
 						longitude2 = exifData.gps.GPSLongitude[2];
 						longitude = longitude0 + longitude1/60 + longitude2/3600;
-						res.status(200).render('display', {t :title, d :description, i: image, ma: make, mo: model, c: createTime la: latitude, lo: longitude});	
-    				});
+						res.status(200).render('display', {t :title, d :description, i: image, ma: make, mo: model, c: createTime});	
+app.get('/map', (req,res) => {
+res.status(200).render('map' ,{la: lat, lo: lon});
+}); 
+				      }
+				});
 			} catch (error) {
    				 console.log('Error: ' + error.message);
 			}
