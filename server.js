@@ -27,11 +27,12 @@ app.post('/filetoupload' , (req,res) => {
 		fs.readFile(files.filetoupload.path, (err,data) => {
 			image = new Buffer.from(data).toString('base64');
 			try {
-    				new ExifImage({ image : 'data' }, function (error, exifData) {
+    				new ExifImage({ image : files.filetoupload.path }, function (error, exifData) {
         				if (error)
             					console.log('Error: '+error.message);
         				else
-            					console.log(exifData); // Do something with your data!
+            					console.log(exifData.image.GPSInfo); 
+						
     				});
 			} catch (error) {
    				 console.log('Error: ' + error.message);
