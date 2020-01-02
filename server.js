@@ -2,11 +2,10 @@ const fs = require('fs');
 const formidable = require('formidable');
 const express = require('express');
 const app = express();
+const ExifImage = require('exif').ExifImage;
 
 app.set('view engine','ejs');
 
-var title = null;
-var description = null;
 
 app.get('/', (req,res) => {
 	res.redirect('/filetoupload');
@@ -19,17 +18,25 @@ app.get('/filetoupload', (req,res) => {
 app.post('/filetoupload' , (req,res) => {
 	const form = new formidable.IncomingForm();
 	form.parse(req, (err, fields, files) => {
-		console.log(filename);
-      		if (fields.title && fields.title.length > 0) {
-        		title = fields.title;
-      		}
-		if (fields.description && fields.description.length > 0) {
-        		description = fields.description;
-      		}
+		let title = null;
+		let description = null;
+		let image = null;
+		title = fields.title;
+        	description = fields.description;
 		console.log("1");
 		fs.readFile(files.filetoupload.path, (err,data) => {
 			image = new Buffer.from(data).toString('base64');
-			res.status(200).render('filetoupload', {t :title, d :description});
+			try {
+    				new ExifImage({ image : 'data' }, function (error, exifData) {
+        				if (error)
+            					console.log('Error: '+error.message);
+        				else
+            					console.log(exifData); // Do something with your data!
+    				});
+			} catch (error) {
+   				 console.log('Error: ' + error.message);
+			}
+			res.status(200).render('display', {t :title, d :description, i: image});
 		});
 	});
 });
