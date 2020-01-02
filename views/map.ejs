@@ -14,7 +14,7 @@
       <script>
          var mapOptions = {
             center: [<%=la%>,<%=lo%>],
-            zoom: 10
+            zoom: 5
          }
          var map = new L.map('map', mapOptions);
          var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
@@ -22,5 +22,6 @@
          var marker = L.marker([<%=la%>,<%=lo%>]);
          marker.addTo(map);
       </script>
+      <button type='button' class='btn btn-primary' onclick="history.back()">Go back</button>
    </body>
 </html>
