@@ -1,15 +1,14 @@
+  
 {
-	"name": "s1211533s381f",
-	"description": "COMPS381F TakeHomeAssignment - Source Code",
-	"author": "Fung Hiu Nam <g1211533@study.ouhk.edu.hk>",
+	"name": "takehomeq1",
+	"description": "COMPS381F Assignment Q1 Source Code",
+	"author": "Fung Hiu Nam",
 	"version": "0.0.1",
 	"dependencies": {
-		"cookie-session": "latest",
-                 "multer": "^1.3.1",
 		"ejs": "^3.0.1",
 		"express": "^4.17.1",
 		"formidable": "latest",
-		"mongodb": "3.1"
+		"exif": "0.6.0"
 	},
 	"scripts": {
 		"start": "node server.js"
