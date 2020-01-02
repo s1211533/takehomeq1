@@ -22,7 +22,7 @@ app.post('/fileupload' , (req,res) => {
 		let image = null;
 		let make = null;
 		let model = null;
-		let createTime = null;
+		let createdOn = null;
 		let latitude1 = null;
 		let latitude2 = null;
 		let latitude3 = null;
@@ -45,7 +45,7 @@ app.post('/fileupload' , (req,res) => {
 					}else{
 						make = exifData.image.Make; 
 						model = exifData.image.Model;
-						createTime = exifData.exif.CreateDate;
+						createdOn = exifData.exif.CreateDate;
 						latitude1 = exifData.gps.GPSLatitude[0];
 						latitude2 = exifData.gps.GPSLatitude[1];
 						latitude3 = exifData.gps.GPSLatitude[2];
@@ -55,7 +55,7 @@ app.post('/fileupload' , (req,res) => {
 						longitude2 = exifData.gps.GPSLongitude[1];
 						longitude3 = exifData.gps.GPSLongitude[2];
 						longitude = (longitude1 + longitude2/60 + longitude3/3600) * (longitudeRef == "W" ? -1 : 1);
-						res.status(200).render('display', {t :title, d :description, i: image, ma: make, mo: model, c: createTime});
+						res.status(200).render('display', {t :title, d :description, i: image, ma: make, mo: model, c: createdOn});
 						app.get('/map', (req,res) => {
 							res.status(200).render('map' ,{la: latitude, lo: longitude});
 						}); 
