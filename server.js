@@ -54,7 +54,7 @@ app.post('/filetoupload' , (req,res) => {
 						longitude = longitude0 + longitude1/60 + longitude2/3600;
 						res.status(200).render('display', {t :title, d :description, i: image, ma: make, mo: model, c: createTime});	
 app.get('/map', (req,res) => {
-res.status(200).render('map' ,{la: lat, lo: lon});
+res.status(200).render('map' ,{la: latitude, lo: longitude});
 }); 
 				      }
 				});
