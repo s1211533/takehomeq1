@@ -56,7 +56,7 @@ app.post('/fileupload' , (req,res) => {
 						mlo = exifData.gps.GPSLongitude[1];
 						slo = exifData.gps.GPSLongitude[2];
 						lon = dlo + mlo/60 + slo/3600 * (longitudeRef == "W" ? -1 : 1);
-						res.status(200).render('display', {t :title, d :description, i: image, ma: make, mo: model, c: createTime});
+						res.status(200).render('displaydetail', {t :title, d :description, i: image, ma: make, mo: model, c: createTime});
 						app.get('/map', (req,res) => {
 							res.status(200).render('map' ,{la: lat, lo: lon});
 						}); 
