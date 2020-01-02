@@ -69,4 +69,7 @@ app.post('/fileupload' , (req,res) => {
 	});
 });
 
+app.get('/error', (req,res) => {
+	res.status(200).render('error');
+});
 app.listen(process.env.PORT || 8099);
